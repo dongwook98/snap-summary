@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { deleteSnap, updateSnap } from '../store/snapsSlice';
 import { fetchGeminiAI } from '../api';
 import MarkdownViewer from './MarkdownViewer';
+import { format } from 'date-fns';
 
 const SnapDetail = () => {
   const navigate = useNavigate();
@@ -48,7 +49,9 @@ const SnapDetail = () => {
     <div className='bg-gray-900 p-6'>
       <div className='flex justify-between items-center mb-4'>
         <div>
-          <time className='block text-sm text-gray-400'>{snap.time}</time>
+          <time className='block text-sm text-gray-400'>
+            {format(snap.time, 'yyyy년 MM월 dd일 HH:mm')}
+          </time>
           <input
             type='text'
             value={snap.title}
@@ -82,7 +85,7 @@ const SnapDetail = () => {
         </div>
         <div className='flex-1 p-4 rounded bg-gray-800'>
           <h3 className='text-lg font-semibold mb-2'>요약 결과</h3>
-          <div className='text-gray-300 h-auto bg-gray-700 p-2 rounded'>
+          <div className='text-gray-300 min-h-64 h-auto bg-gray-700 p-2 rounded'>
             <MarkdownViewer markdown={snap.summary} />
           </div>
         </div>

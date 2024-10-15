@@ -8,15 +8,14 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const handleClick = () => {
     const id = uuidv4();
-    dispatch(
-      addSnap({
-        id,
-        title: '새로운 스냅',
-        content: '새로운 스냅 내용',
-        summary: '',
-        time: Date.now(),
-      })
-    );
+    const newSnap = {
+      id,
+      title: '새로운 스냅',
+      content: '',
+      summary: '',
+      time: Date.now(),
+    };
+    dispatch(addSnap(newSnap));
     navigate(`/snaps/${id}`);
   };
   const snaps = useSelector((state) => state.snaps);
