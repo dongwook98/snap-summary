@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteSnap, updateSnap } from '../store/snapsSlice';
+import { fetchGeminiAI } from '../api';
+import MarkdownViewer from './MarkdownViewer';
 
 const SnapDetail = () => {
   const navigate = useNavigate();
@@ -32,6 +34,16 @@ const SnapDetail = () => {
     navigate('/');
   };
 
+  const handleSubmit = async () => {
+    const data = await fetchGeminiAI(snap.content);
+    dispatch(
+      updateSnap({
+        ...snap,
+        summary: data.candidates[0].content.parts[0].text,
+      })
+    );
+  };
+
   return (
     <div className='bg-gray-900 p-6'>
       <div className='flex justify-between items-center mb-4'>
@@ -55,20 +67,23 @@ const SnapDetail = () => {
       </div>
       <section className='flex'>
         <div className='flex-1 p-4 rounded mr-4 bg-gray-800'>
-          <h2 className='text-lg font-semibold mb-2'>메모</h2>
+          <h2 className='text-lg font-semibold mb-2'>요약할 내용</h2>
           <textarea
             className='bg-gray-700 w-full h-64 p-2 rounded resize-none focus:(ring-2 ring-blue-500)'
             value={snap.content}
             onChange={handleChangeContent}
           ></textarea>
-          <button className='mt-4 bg-blue-600 hover:bg-blue-500 py-2 px-4 rounded'>
+          <button
+            onClick={handleSubmit}
+            className='mt-4 bg-blue-600 hover:bg-blue-500 py-2 px-4 rounded'
+          >
             요약
           </button>
         </div>
         <div className='flex-1 p-4 rounded bg-gray-800'>
           <h3 className='text-lg font-semibold mb-2'>요약 결과</h3>
-          <div className='text-gray-300 h-64 bg-gray-700 p-2 rounded'>
-            요약 내용
+          <div className='text-gray-300 h-auto bg-gray-700 p-2 rounded'>
+            <MarkdownViewer markdown={snap.summary} />
           </div>
         </div>
       </section>
