@@ -1,11 +1,25 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { addSnap } from '../store/snapsSlice';
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleClick = () => {
-    const id = 1;
+    const id = uuidv4();
+    dispatch(
+      addSnap({
+        id,
+        title: '새로운 스냅',
+        content: '새로운 스냅 내용',
+        summary: '',
+        time: Date.now(),
+      })
+    );
     navigate(`/snaps/${id}`);
   };
+  const snaps = useSelector((state) => state.snaps);
 
   return (
     <div className='w-[230px] p-4'>
@@ -28,6 +42,22 @@ const Sidebar = () => {
           홈
         </NavLink>
       </div>
+      <ul className='mt-4'>
+        {snaps.map((snap) => (
+          <li key={snap.id}>
+            <NavLink
+              to={`/snaps/${snap.id}`}
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-blue-500 font-semibold'
+                  : 'text-gray-300 hover:text-white'
+              }
+            >
+              {snap.title}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
