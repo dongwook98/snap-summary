@@ -1,11 +1,9 @@
-import SummaryDetail from './SummaryDetail';
-import SummaryList from './SummaryList';
+import { Outlet } from 'react-router-dom';
 
 const Main = () => {
   return (
     <div className='grow bg-gray-800 py-[70px]'>
-      {/* <SummaryList /> */}
-      <SummaryDetail />
+      <Outlet />
     </div>
   );
 };

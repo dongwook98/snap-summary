@@ -1,4 +1,4 @@
-const SummaryDetail = () => {
+const SnapDetail = () => {
   return (
     <div className='bg-gray-900 p-6'>
       <div className='flex justify-between items-center mb-4'>
@@ -34,4 +34,4 @@ const SummaryDetail = () => {
   );
 };
 
-export default SummaryDetail;
+export default SnapDetail;

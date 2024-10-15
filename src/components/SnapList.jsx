@@ -1,4 +1,6 @@
-const SummaryList = () => {
+import { Link } from 'react-router-dom';
+
+const SnapList = () => {
   return (
     <div className='max-w-[1030px] m-auto rounded-lg bg-gray-900 p-4'>
       <div className='flex justify-end space-x-4 mb-4'>
@@ -7,8 +9,8 @@ const SummaryList = () => {
       </div>
       <ul>
         <li>
-          <a
-            href='/'
+          <Link
+            to='/snaps/1'
             className='flex items-center justify-between bg-gray-800 p-4 rounded-lg mb-2 hover:bg-gray-700'
           >
             <div>
@@ -18,11 +20,11 @@ const SummaryList = () => {
             <div>
               <time className='text-sm text-gray-400'>2024</time>
             </div>
-          </a>
+          </Link>
         </li>
       </ul>
     </div>
   );
 };
 
-export default SummaryList;
+export default SnapList;

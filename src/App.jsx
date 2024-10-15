@@ -1,13 +1,28 @@
-import Main from './components/Main';
-import Sidebar from './components/Sidebar';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import Home from './page/Home';
+import SnapList from './components/SnapList';
+import SnapDetail from './components/SnapDetail';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+    children: [
+      {
+        index: true,
+        element: <SnapList />,
+      },
+      {
+        path: 'snaps/:id',
+        element: <SnapDetail />,
+      },
+    ],
+  },
+]);
 
 const App = () => {
-  return (
-    <div className='flex h-screen text-white bg-gray-800'>
-      <Sidebar />
-      <Main />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
